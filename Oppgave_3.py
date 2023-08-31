@@ -15,8 +15,8 @@ def Power(x,y):#definerer opphøyning
 def Modulo(x,y):#definerer modulo
     return(x%y)
 #hva er tallene
-Num1 = int(input("hva er det første nummeret ditt?"))
-Num2 = int(input("hva er det andre nummeret ditt?"))
+Num1 = int(input("hva er det første nummeret ditt?"))#første tall
+Num2 = int(input("hva er det andre nummeret ditt?"))#andre tall
 #kalkulering babyyy
 Operation = input("velg hvilken operasjon du vil gjøre med de tallene. velg mellom +,-,*,/,//,**,%")
 if Operation == "+":#pluss
