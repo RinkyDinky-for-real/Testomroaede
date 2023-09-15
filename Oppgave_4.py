@@ -12,8 +12,13 @@ print("metode nr:1")
 for i in den_list:
     print(i)
 print("metode nr:2")
-for n in den_list:
-    print(n)
-print("metode nr:3")
-for x in range(3):
+for x in range(len(den_list)):
     print(den_list[x])
+for i in range (len(den_list)):
+    print("{}.{}".format(i + 1, den_list[i]))#med denne får man nummererte
+print("metode nr:3")
+for i in range (len(den_list)):
+    print("{}.{}".format(i + 1, den_list[i]))#med denne får man nummererte    print(den_list[x])
+print("metode nr:4")
+for index, element in enumerate(den_list):#annen metode for å nummerere
+  print(index, ":", element)

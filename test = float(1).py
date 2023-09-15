@@ -1,4 +1,2 @@
-test = int(1)
-test2 = float(2)
-
-print(test+test2)
+for x in 1000000000000000000000**10000000000000000000:
+    print("fnnuy")
