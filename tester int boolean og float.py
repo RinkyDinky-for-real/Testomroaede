@@ -21,3 +21,5 @@ print(b)
 dolphins = True
 if dolphins == True:
     print("help")
+
+alfabet = ["A","B","C"]

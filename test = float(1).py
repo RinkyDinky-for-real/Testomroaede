@@ -1,2 +1,2 @@
-for x in 1000000000000000000000**10000000000000000000:
-    print("fnnuy")
+for x in range(6):
+    print(x)
