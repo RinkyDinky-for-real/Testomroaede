@@ -1,24 +1,13 @@
-src_list = ['Farmer Giles of Ham', 'Lord of The Rings: The Fellowship of The Ring', 
-'Lord of The Rings: The Return of the King', 'Lord of The Rings: The Two Towers', 
-'The Adventures of Tom Bombadil', 'The Hobbit',
-'The Silmarillion', 'Tree and Leaf', 'Unfinished Tales']
+#Vet ikke om dette var riktig måte å gjøre denne oppgaven på......
+def volum_calc(x,y,z):
+    volum = int(x*y*z)
+    print(f"Volumet er {volum} cm³.")
 
-den_list = list()
-
-den_list.insert(0,src_list[1])
-den_list.insert(1,src_list[2])
-den_list.insert(2,src_list[3])
-print("metode nr:1")
-for i in den_list:
-    print(i)
-print("metode nr:2")
-for x in range(len(den_list)):
-    print(den_list[x])
-for i in range (len(den_list)):
-    print("{}.{}".format(i + 1, den_list[i]))#med denne får man nummererte
-print("metode nr:3")
-for i in range (len(den_list)):
-    print("{}.{}".format(i + 1, den_list[i]))#med denne får man nummererte    print(den_list[x])
-print("metode nr:4")
-for index, element in enumerate(den_list):#annen metode for å nummerere
-  print(index, ":", element)
+while True:
+    if input("Vil du kjøre funksjonen? Y/N") == "Y":
+        x = int(input("Hva er lengden på objektet i cm?"))
+        y = int(input("Hva er bredden på objektet i cm?"))
+        z = int(input("Hva er høyden på objektet i cm?"))
+        volum_calc(x, y, z)
+    else:
+        print("Neivel")

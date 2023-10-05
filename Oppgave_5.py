@@ -1,16 +1,18 @@
-import random
-
-dart_antall = [0, 0, 0]
-
-player_score = []
-
-player_antall = int(input("velg antall spillere"))
-
-while len(player_score) < player_antall:
-    player_score.append(int(0))
-
-for n in range(len(player_score)):
-    for i in range(len(dart_antall)):
-        dart_antall[i] = random.randrange(0,61)
-    player_score[n] = dart_antall[0]+dart_antall[1]+ dart_antall[2]
-    print (f"Den totale poengsummen for spiller {n+1} ble: {player_score[n]}, med kastene: {dart_antall[0]},{dart_antall[1]},{dart_antall[2]}.")
+#oppgave 5.1
+filmer = [#A
+    {"name" : "Inception", "year" : 2010, "rating" : 8.7},
+    {"name" : "Inside Out", "year" : 2015, "rating" : 8.1},
+    {"name" : "Con Air", "year" : 1997, "rating" : 6.9}]
+def add_film(x,y,z):#B
+    if z is not float :#C, del 1
+        z = 5.0
+    filmer.append({"name" : x,"year" : y,"rating" : z})
+for n in filmer:
+    print(n)
+print("**********neste**********")
+add_film("Independence Day","1996", 6.6 )
+add_film("Jurassic Park","1993", 8.5 )
+add_film("Tenet","2020", 6.9 )
+add_film("Barbie","2023", )#C, del 2
+for n in filmer:
+    print(n)
