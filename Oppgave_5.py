@@ -29,3 +29,15 @@ def year_check(x):#C
         if int(x[i]["year"]) >= 2010:
             print(x[i]["name"],"-", x[i]["year"],"has a rating of",x[i]["rating"])
 year_check(filmer)#C
+def write_file(x):#A
+    print("**********5.3A:**********")
+    print("Her var det litt tomt, gitt.")
+    t = open (x, "w")#kult at den autogenererer en fil med det navnet hvis den ikke finner noe
+    for i in range(len(filmer)):
+        t.write(f"{filmer[i]['name']}-{filmer[i]['year']} has a rating of {filmer[i]['rating']}."+'\n')#måtte gjøre printen på en annen måte
+write_file("movies.txt")#A
+def read_file(x):#B
+    print("**********5.3B**********")
+    t = open (x, "r")
+    print(t.read())
+read_file("movies.txt")#B
