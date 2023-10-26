@@ -16,21 +16,28 @@ class Deck:
     def __init__(self):
         self.cards = []
         suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
-        ranks = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King']
+        ranks = ['Ace', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King']
+
         for suit in suits:
             for rank in ranks:
                 self.cards.append(Card(rank, suit))
-
-deck = Deck()
-random.shuffle(deck.cards)
-
+class Hand:
+    def __init__(self):
+        self.hands = ()
+        pass
+# Creating a deck, shuffling it, and drawing a card
+idealdeck = Deck()
+playdeck = list(idealdeck.cards)
+player = Hand()
+dealer = Hand()
 def draw_card(x):
     if x:
         return x.pop()
     else:
         return None
-card = draw_card(deck.cards)
-print(f"Drawn card: {card}: {card.rank} of {card.suit}")
+card = draw_card(playdeck)
+print(f"Drawn card: {card.rank} of {card.suit}")
+playdeck = list(idealdeck.cards)
+for card in playdeck:
+    print(f"{card}: {card.rank} of {card.suit}")
 
-#print(deck.cards)
-# You can continue drawing cards until the deck is empty.

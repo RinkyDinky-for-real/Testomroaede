@@ -1,7 +1,11 @@
-class Klasse:
-    def __init__(self, x):
-        self.x = x
-objekt= Klasse(5)
-objekt2= Klasse(10)
-print(objekt.x)
-print(objekt2.x)
+class Card:
+    def __init__(self, rank, suit):
+        self.rank = rank
+        self.suit = suit
+
+card0 = Card("Ace", "Spades")
+card1 = Card("Ace", "Clubs")
+card2 = Card("Ace", "Diamonds")
+card3 = Card("Ace", "Hearts")
+card4 = Card("Two", "Spades")
+card5 = Card("Two", "Clubs")
