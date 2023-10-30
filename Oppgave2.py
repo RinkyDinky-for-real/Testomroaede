@@ -20,7 +20,7 @@ class Deck:
 
         for suit in suits:
             for rank in ranks:
-                self.cards.append(Card(rank, suit))
+                self.cards.append(Card(rank, suit))#lager alle kortene
 class Hand:
     def __init__(self, x):
         self.name = x
@@ -42,6 +42,16 @@ values = {
     'Queen': 10,
     'King': 10
 }
+chips = 7 #disse kunne ha blitt flyttet inn i Hand-klassen, så hadde det vært mye lettere å få til EVT flerspillere 
+wager = 0
+gameOver = False
+
+idealdeck = Deck()
+playdeck = list(idealdeck.cards)
+random.shuffle(playdeck)
+player = Hand("player")
+dealer = Hand("dealer")
+
 def rank_value(rank):
     return values[rank]
 def draw_card(x):
@@ -53,6 +63,7 @@ def draw_to_hand(x, y):
     if x:
         y.hands.append(x)
 def sum_hand(x):
+    x.value = 0
     for card in x.hands:
         x.value += rank_value(card.rank)
         if card.rank == "Ace":
@@ -80,21 +91,85 @@ def showhand_dealer(x):
     if d_card:
         print(f"{d_card.rank} of {d_card.suit}")
     print(f"For a value of:{sum_hand_dealer(x)}")
-chips = 7
-wager = 0
-gameOver = False
+def chipswager(x):
+    global wager
+    while True:
+        wager = int(input(f"You have {x} chip(s) remaining, how many do you want to bet?"))
+        if wager > x:
+            print("You can't bet more than you have!")
+        else:
+            print(f"You have decided to bet {wager} chip(s)")
+            break  # Exit the loop when a valid wager is made
+def gamesetup():
+    draw_to_hand(draw_card(playdeck), player)
+    draw_to_hand(draw_card(playdeck), player)
+    draw_to_hand(draw_card(playdeck), dealer)
+    draw_to_hand(draw_card(playdeck), dealer)
+    chipswager(chips)
+    showhand(player)
+    showhand_dealer(dealer)
+#den skitten som funker^ 
+#den skitten som ikke funker smh smh
+def player_turn():
+    global gameOver
 
-idealdeck = Deck()
-playdeck = list(idealdeck.cards)
-random.shuffle(playdeck)
-player = Hand("player")
-dealer = Hand("dealer")
+    while True:
+        decision = input("Do you want to hit or stand? Enter 'h' for hit or 's' for stand: ").lower()
 
-draw_to_hand(draw_card(playdeck), player)
-draw_to_hand(draw_card(playdeck), player)
-draw_to_hand(draw_card(playdeck), dealer)
-draw_to_hand(draw_card(playdeck), dealer)
-showhand(player)
-showhand_dealer(dealer)
-#while gameOver == False:#gameloop
-#    print()
+        if decision == 'h':
+            # Player chooses to hit
+            draw_to_hand(draw_card(playdeck), player)
+            showhand(player)
+
+            # Check if the player busts (hand value exceeds 21)
+            if sum_hand(player) > 21:
+                print("Player busts! You lose.")
+                return "bust"
+
+        elif decision == 's':
+            # Player chooses to stand
+            break
+        else:
+            print("Invalid input. Please enter 'h' for hit or 's' for stand.")
+
+        if len(player.hands) == 2 and sum_hand(player) == 21:
+            print("Player has a Blackjack! Now to see what the dealer has.....")
+            return "Blackjack"
+        elif len(player.hands) == 2 and sum_hand(player) < 21:
+            # Player has two cards but hasn't reached 21; they can choose to stand or hit again.
+            continue
+        elif len(player.hands) > 2 and sum_hand(player) == 21:
+            # Player reached 21 after hitting with more than two cards.
+            print("Player has 21! Your turn ends.")
+            break
+def dealer_turn():
+    while sum_hand(dealer) < 17:
+        # Dealer must hit until the hand value is 17 or greater
+        draw_to_hand(draw_card(playdeck), dealer)
+    showhand(dealer)
+    if sum_hand(dealer) > 21:
+                print("Dealer busts!")
+                return "bust"
+
+while not gameOver:
+    if chips <= 0:
+        print("You are destitute!")
+        gameOver = True
+        break
+    
+    # Game setup (deal cards and place a wager)
+    gamesetup()
+    
+    # Player's turn
+    player_turn()  # Implement player's decision (hit or stand)
+    
+    # Dealer's turn
+    dealer_turn()  # Implement dealer's decision (hit or stand)
+    
+    # Determine the game outcome
+    #game_outcome()  # Example: win, lose, or push
+    
+    # Update chips and check for game over conditions
+    #update_chips()  # Example: adjust chips based on game outcome and check if the player wants to continue
+
+# End of game loop
