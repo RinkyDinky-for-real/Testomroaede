@@ -26,6 +26,7 @@ class Hand:
         self.name = x
         self.hands = []
         self.value = int(0)
+        self.result = ""
         self.has_ace = False
 values = {
     'Ace': 1,  # Ess håndteres inni funksjonen
@@ -112,11 +113,13 @@ def gamesetup():
 #den skitten som ikke funker smh smh
 def player_turn():
     global gameOver
-
+    if len(player.hands) == 2 and sum_hand(player) == 21:
+            print("Player has a Blackjack! Now to see what the dealer has.....")
+            return "blackjack"
     while True:
         decision = input("Do you want to hit or stand? Enter 'h' for hit or 's' for stand: ").lower()
-
-        if decision == 'h':
+        
+        if decision == "h":
             # Player chooses to hit
             draw_to_hand(draw_card(playdeck), player)
             showhand(player)
@@ -125,24 +128,18 @@ def player_turn():
             if sum_hand(player) > 21:
                 print("Player busts! You lose.")
                 return "bust"
-
-        elif decision == 's':
-            # Player chooses to stand
-            break
-        else:
-            print("Invalid input. Please enter 'h' for hit or 's' for stand.")
-
-        if len(player.hands) == 2 and sum_hand(player) == 21:
-            print("Player has a Blackjack! Now to see what the dealer has.....")
-            return "Blackjack"
-        elif len(player.hands) == 2 and sum_hand(player) < 21:
-            # Player has two cards but hasn't reached 21; they can choose to stand or hit again.
-            continue
-        elif len(player.hands) > 2 and sum_hand(player) == 21:
+        if len(player.hands) > 2 and sum_hand(player) == 21:
             # Player reached 21 after hitting with more than two cards.
             print("Player has 21! Your turn ends.")
-            break
+            return("stand")
+        elif decision != "h" and decision != "s":
+            print("Invalid input. Please enter 'h' for hit or 's' for stand.")
+        elif decision == "s":
+            return("stand")
 def dealer_turn():
+    if len(dealer.hands) == 2 and sum_hand(dealer) == 21:
+            print("Dealer has a Blackjack!")
+            return "blackjack"
     while sum_hand(dealer) < 17:
         # Dealer must hit until the hand value is 17 or greater
         draw_to_hand(draw_card(playdeck), dealer)
@@ -151,7 +148,25 @@ def dealer_turn():
                 print("Dealer busts!")
                 return "bust"
 
-while not gameOver:
+def game_outcome():
+    if player.result == "bust":
+        return "loss"
+    elif dealer.result == "bust":
+        return "win"
+    elif sum_hand(player) == sum_hand(dealer):
+        return "push"
+    elif player.result == "blackjack" and dealer.result == "blackjack":
+        return "push"
+    elif player.result == "blackjack":
+        return "blackjack"
+    elif dealer.result == "blackjack":
+        return "loss"
+    elif sum_hand(player) > sum_hand(dealer):
+        return "win"
+    else:
+        return "loss"
+    
+while not gameOver:#gameloop
     if chips <= 0:
         print("You are destitute!")
         gameOver = True
@@ -161,14 +176,16 @@ while not gameOver:
     gamesetup()
     
     # Player's turn
-    player_turn()  # Implement player's decision (hit or stand)
+    player.result = player_turn()  # Implement player's decision (hit or stand)
     
     # Dealer's turn
-    dealer_turn()  # Implement dealer's decision (hit or stand)
-    
+    dealer.result = dealer_turn()  # Implement dealer's decision (hit or stand)
+
     # Determine the game outcome
-    #game_outcome()  # Example: win, lose, or push
-    
+    game_outcome()  # Example: win, lose, or push
+    print(game_outcome())
+    print(player_turn())
+    break
     # Update chips and check for game over conditions
     #update_chips()  # Example: adjust chips based on game outcome and check if the player wants to continue
 
