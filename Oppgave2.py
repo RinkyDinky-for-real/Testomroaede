@@ -102,16 +102,16 @@ def sum_hand_dealer(x):  # chatgpt hjalp meg her
     return x.value
 
 
-def showhand(x):
+def showhand(x):#printer hånden
     print(f"The {x.name}'s hand consists of the following cards: ")
     for card in x.hands:
         print(f"{card.rank} of {card.suit}")
     print(f"For a combined value of: {sum_hand(x)}")
 
 
-def showhand_dealer(x):
+def showhand_dealer(x):#for å vise dealeren sitt synlige kort
     print(f"The {x.name}'s visible card is: ")
-    d_card = x.hands[0]
+    d_card = x.hands[0]# chat hjalp meg her
     if d_card:
         print(f"{d_card.rank} of {d_card.suit}")
     print(f"For a value of: {sum_hand_dealer(x)}")
