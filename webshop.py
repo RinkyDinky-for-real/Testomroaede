@@ -41,7 +41,6 @@ def add_number_of_ware_to_shopping_cart(ware_key, ware, shopping_cart, number_of
 
 def calculate_shopping_cart_price(shopping_cart, all_wares, tax=1.25):#oppgave 6
     #Returnerer prisen av en handlevogn basert på varene i den.
-    print("Shopping cart:")
     total_price = 0
     for ware_key, amount in shopping_cart.items():
         if ware_key in all_wares:
@@ -51,7 +50,6 @@ def calculate_shopping_cart_price(shopping_cart, all_wares, tax=1.25):#oppgave 6
         else:
             print(f"{ware_key} is not a valid ware key.")
     total_price_with_tax = total_price * tax
-    print(f"The price after tax: {total_price_with_tax} NOK")
     return total_price_with_tax
 
 def can_afford_shopping_cart(shopping_cart_price, wallet):#oppgave 7
@@ -61,25 +59,34 @@ def can_afford_shopping_cart(shopping_cart_price, wallet):#oppgave 7
     else:
         return False
 def buy_shopping_cart(wallet, shopping_cart, all_wares):#oppgave 8
-    updated_shopping_cart = {}
+    print("************************************")
+    print("Attempting to buy shopping cart...")
+    print("************************************")
     for key, value in shopping_cart.items():
         if key in all_wares and all_wares[key]["number_in_stock"] >= value:
             all_wares[key]["number_in_stock"] -= value
-            updated_shopping_cart[key] = value
+            shopping_cart[key] = value
+            print(f"{value} {all_wares[key]['name']} bought.")
+        elif key in all_wares and all_wares[key]["number_in_stock"] < 1:
+            shopping_cart.pop(key)
+            print(f"{all_wares[key]['name']} is out of stock.")
+            break#slik at det ikke kræsjer når det er tomt for en vare
         elif key in all_wares and all_wares[key]["number_in_stock"] < value:
-            updated_shopping_cart[key] = all_wares[key]["number_in_stock"]
+            shopping_cart[key] = all_wares[key]["number_in_stock"]
             all_wares[key]["number_in_stock"] = 0
+            print(f"Not enough of {all_wares[key]['name']} in stock.")
+            print(f"Instead, all {shopping_cart[key]} of {all_wares[key]['name']} will be bought.")
         else:
             continue
-    shopping_cart.clear()
-    for key, value in updated_shopping_cart.items():
+    print("************************************")
+    print(f"The total price of the wares after tax was: {calculate_shopping_cart_price(shopping_cart, all_wares)}kr.")
+    for key, value in shopping_cart.items():
         if all_wares[key]["number_in_stock"] > 0:
             shopping_cart[key] = value if value <= all_wares[key]["number_in_stock"] else all_wares[key]["number_in_stock"]
     if can_afford_shopping_cart(calculate_shopping_cart_price(shopping_cart, all_wares), wallet):
         wallet.subtract_amount(calculate_shopping_cart_price(shopping_cart, all_wares))
         clear_shopping_cart(shopping_cart)
-    return updated_shopping_cart, wallet
-    #Kjøper varene i en handlevogn. Parameterene defineres i oppgaven.
+        print("The purchase was successful.")
 
 #------------------------------------------
 # Predefinerte funksjoner
