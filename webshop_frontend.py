@@ -43,7 +43,7 @@ print()
 # Oppretter en lommebok som inneholder 10000 kr
 wallet = Wallet(10000)
 # Forsøker å kjøpe varene i handlevognen
-ws.buy_shopping_cart('''Parameterne blir definert i oppgaven''')
+ws.buy_shopping_cart(wallet, shopping_cart, all_wares)
 print()
 # Skriver ut mengden penger i lommeboka etter kjøpet
 print(f"The amount in the wallet after the purchase: {wallet.get_amount()}")

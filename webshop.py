@@ -54,9 +54,31 @@ def calculate_shopping_cart_price(shopping_cart, all_wares, tax=1.25):#oppgave 6
     print(f"The price after tax: {total_price_with_tax} NOK")
     return total_price_with_tax
 
-#def can_afford_shopping_cart(shopping_cart_price, wallet):
-#Returnerer en Boolean-verdi basert på om det er nok penger i en gitt lommebok for å kjøpe en handlevogn.
-#def buy_shopping_cart():
+def can_afford_shopping_cart(shopping_cart_price, wallet):#oppgave 7
+    #Returnerer en Boolean-verdi basert på om det er nok penger i en gitt lommebok for å kjøpe en handlevogn.
+    if wallet.get_amount() >= shopping_cart_price:
+        return True
+    else:
+        return False
+def buy_shopping_cart(wallet, shopping_cart, all_wares):#oppgave 8
+    updated_shopping_cart = {}
+    for key, value in shopping_cart.items():
+        if key in all_wares and all_wares[key]["number_in_stock"] >= value:
+            all_wares[key]["number_in_stock"] -= value
+            updated_shopping_cart[key] = value
+        elif key in all_wares and all_wares[key]["number_in_stock"] < value:
+            updated_shopping_cart[key] = all_wares[key]["number_in_stock"]
+            all_wares[key]["number_in_stock"] = 0
+        else:
+            continue
+    shopping_cart.clear()
+    for key, value in updated_shopping_cart.items():
+        if all_wares[key]["number_in_stock"] > 0:
+            shopping_cart[key] = value if value <= all_wares[key]["number_in_stock"] else all_wares[key]["number_in_stock"]
+    if can_afford_shopping_cart(calculate_shopping_cart_price(shopping_cart, all_wares), wallet):
+        wallet.subtract_amount(calculate_shopping_cart_price(shopping_cart, all_wares))
+        clear_shopping_cart(shopping_cart)
+    return updated_shopping_cart, wallet
     #Kjøper varene i en handlevogn. Parameterene defineres i oppgaven.
 
 #------------------------------------------
