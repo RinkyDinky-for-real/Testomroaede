@@ -31,12 +31,12 @@ car_register = {
 NEW_CAR_REGISTRATION_FEE = 8745
 RENT_CAR_PERCENTAGE = 0.4
 RENT_NEW_CAR__FEE = 1000
-def print_car_information(car):# Oppgave 3.1
+def print_car_information(car):# Oppgave 2.1
     if is_new(car):
         print(f"Brand: {car['brand']}, Model: {car['model']}, Price: {car['price']}, Year: {car['year']}, Month: {car['month']}, Condition: New, Mileage: {car['km']} Km.")
     else:
         print(f"Brand: {car['brand']}, Model: {car['model']}, Price: {car['price']}, Year: {car['year']}, Month: {car['month']}, Condition: Used, Mileage: {car['km']} Km.")
-def create_car(car_register, brand, model, price, year, month, new, km):# Oppgave 3.2
+def create_car(car_register, brand, model, price, year, month, new, km):# Oppgave 2.2
     car_id = f"{brand.lower()}{model}"
     car = {
         "brand": brand,
@@ -49,16 +49,16 @@ def create_car(car_register, brand, model, price, year, month, new, km):# Oppgav
     }
     car_register[car_id] = car
 
-def get_car_age(car):# Oppgave 3.3
+def get_car_age(car):# Oppgave 2.3
     car_age = date.today().year - car['year']
     return car_age
-def rent_car_monthly_price(car):# Oppgave 3.4
+def rent_car_monthly_price(car):# Oppgave 2.4
     monthly_price = (car['price'] * RENT_CAR_PERCENTAGE)/12
     if car['new'] == True:
         monthly_price += RENT_NEW_CAR__FEE
     monthly_price = round(monthly_price, 2)
     return monthly_price
-def next_eu_control(car):# Oppgave 3.5
+def next_eu_control(car):# Oppgave 2.5
     logic_year = car['year']
     while True:
         logic_year += 2
@@ -68,7 +68,7 @@ def next_eu_control(car):# Oppgave 3.5
             continue
     next_eu_control_date = date(logic_year, car['month'], 1)
     return next_eu_control_date
-def calculate_total_price(car):# Oppgave 3.6
+def calculate_total_price(car):# Oppgave 2.6
     car_price = int(car['price'])
     if car['new'] == True:
         car_price += NEW_CAR_REGISTRATION_FEE
