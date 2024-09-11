@@ -1,0 +1,3 @@
+C:/Users/emil/Documents/GitHub/Testomroaede/oblig2/cmake-build-debug/CMakeFiles/oblig2.dir
+C:/Users/emil/Documents/GitHub/Testomroaede/oblig2/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/emil/Documents/GitHub/Testomroaede/oblig2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
